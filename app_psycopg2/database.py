@@ -3,12 +3,12 @@ from psycopg2 import pool
 
 
 class Database:
-    connection_pool = None
+    __connection_pool = None
 
 
     @classmethod
     def initialize(cls):
-        cls.connection_pool = pool.SimpleConnectionPool(1, 10, 
+        cls.__connection_pool = pool.SimpleConnectionPool(1, 10, 
                                                     user='danielgriffin', 
                                                     password='', 
                                                     database='learning', 
@@ -16,15 +16,15 @@ class Database:
 
     @classmethod
     def get_connection(cls):
-        return cls.connection_pool.getconn()
+        return cls.__connection_pool.getconn()
 
     @classmethod
     def return_connection(cls, connection):
-        return cls.connection_pool.putconn(connection)
+        return cls.__connection_pool.putconn(connection)
 
     @classmethod
     def close_all_connections(cls):
-        Database.connection_pool.closeall()
+        Database.__connection_pool.closeall()
 
 
 
